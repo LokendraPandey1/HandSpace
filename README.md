@@ -44,7 +44,7 @@ By focusing on education, HandSpace aims to support clearer classroom demonstrat
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/HandSpace.git
+    git clone https://github.com/LokendraPandey1/HandSpace.git
     cd HandSpace
     ```
 
