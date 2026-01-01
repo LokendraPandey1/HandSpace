@@ -47,13 +47,7 @@ By focusing on education, HandSpace aims to support clearer classroom demonstrat
     git clone https://github.com/yourusername/HandSpace.git
     cd HandSpace
     ```
-
-2.  **Add 3D Models**:
-    -   Place your `.glb` files in the `models/` directory.
-    -   Update `src/models/modelLoader.js` to include your new files in the `MODELS` array.
-    -   *Note: A fallback model (blue cube) appears if files are missing.*
-
-3.  **Run Locally**:
+2.  **Run Locally**:
     -   **Windows (Automated)**: Double-click `run.bat`.
     -   **VS Code**: Right-click `index.html` -> "Open with Live Server".
     -   **Python**:
@@ -65,7 +59,7 @@ By focusing on education, HandSpace aims to support clearer classroom demonstrat
         npx http-server .
         ```
 
-4.  **Open in Browser**:
+3.  **Open in Browser**:
     -   Navigate to `http://localhost:8000`.
     -   Allow camera access when prompted.
 
