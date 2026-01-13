@@ -18,7 +18,7 @@ export class GeminiService {
      * @returns {Promise<string>} The explanation text.
      */
     async explainMesh(meshName, parentModelName) {
-        console.log(`🤖 Gemini thinking about: ${meshName} in ${parentModelName}...`);
+        console.log(`Gemini thinking about: ${meshName} in ${parentModelName}...`);
         
         const prompt = `
             You are an expert 3D Tutor. 
@@ -38,7 +38,7 @@ export class GeminiService {
             const response = await result.response;
             return response.text();
         } catch (error) {
-            console.error("❌ Gemini API Error:", error);
+            console.error("Gemini API Error:", error);
             return "I'm having trouble connecting to the brain base right now. Please check your API Key.";
         }
     }
