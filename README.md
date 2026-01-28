@@ -156,3 +156,6 @@ Accessibility enhancements for diverse learners
 -   [MediaPipe Hands](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker) - Hand Tracking
 -   Vanilla HTML5/CSS/JS
 
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).

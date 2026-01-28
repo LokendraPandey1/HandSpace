@@ -20,7 +20,9 @@
         {
             "imports": {
                 "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+                "@google/generative-ai": "https://esm.run/@google/generative-ai"
             }
         }
     </script>
@@ -38,12 +40,28 @@
             <button id="btn-scale-up" class="control-btn" title="Scale Up">+</button>
             <button id="btn-scale-down" class="control-btn" title="Scale Down">-</button>
             <button id="btn-reset" class="control-btn" title="Reset View">Reset</button>
+            <button id="btn-ask-gemini" class="control-btn" title="Ask AI">🤖</button>
         </div>
         <div class="instructions">
             <p>👆 Rotate: Index Pinch</p>
             <p>✋ Pan: Middle Pinch</p>
             <p>👌 Scale: Pinky Pinch</p>
             <p>🖱️ Mouse: Orbit/Zoom</p>
+        </div>
+
+        <!-- Gemini Response Card -->
+        <div id="gemini-card" class="glass-panel hidden">
+            <div class="card-header">
+                <span class="card-title">✨ Gemini Tutor</span>
+                <button id="btn-close-card" class="close-btn">&times;</button>
+            </div>
+
+            <div id="gemini-body">
+                <div id="ai-spinner" class="spinner hidden"></div>
+                <p id="gemini-response-text" class="typewriter">
+                    Click on any part of the model to ask me about it!
+                </p>
+            </div>
         </div>
     </div>
 

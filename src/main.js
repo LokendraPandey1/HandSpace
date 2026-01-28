@@ -11,6 +11,8 @@ import { InteractionState } from './interaction/stateMachine.js';
 import { applyInteraction } from './interaction/mapper.js';
 import { updateStatus } from './ui/overlay.js';
 import { initControls } from './ui/controls.js';
+import { GeminiService } from './ai/geminiService.js';
+import { castRay } from './interaction/raycaster.js';
 
 const videoElem = document.getElementsByClassName('input_video')[0];
 const canvasElem = document.getElementsByClassName('output_canvas')[0];
@@ -33,9 +35,69 @@ function init() {
 
     initControls(modelMgr, orbitControls);
 
+
     modelMgr.load(MODELS[0].file);
 
     initHandTracker(videoElem, processHandData);
+
+    // --- AI INTEGRATION (Dept 4) ---
+    const geminiSvc = new GeminiService();
+    let isAiMode = false;
+    const btnAi = document.getElementById('btn-ask-gemini');
+    const cardAi = document.getElementById('gemini-card');
+    const textAi = document.getElementById('gemini-response-text');
+    const loaderAi = document.getElementById('ai-spinner');
+    const btnClose = document.getElementById('btn-close-card');
+
+    // UI Toggle
+    btnAi.onclick = () => {
+        isAiMode = !isAiMode;
+        if (isAiMode) {
+            stateTracker.currentMode = 'GEMINI_MODE'; // Optional: if you update state machine
+            cardAi.classList.remove('hidden');
+            btnAi.style.background = 'rgba(0, 242, 254, 0.4)';
+            textAi.innerText = "Tap any part of the model to learn about it!";
+        } else {
+            cardAi.classList.add('hidden');
+            btnAi.style.background = '';
+        }
+    };
+
+    btnClose.onclick = () => {
+        isAiMode = false;
+        cardAi.classList.add('hidden');
+        btnAi.style.background = '';
+    };
+
+    // Interaction Listener
+    window.addEventListener('pointerdown', async (event) => {
+        if (!isAiMode) return;
+        if (event.target.closest('#ui-container')) return; // Ignore UI clicks
+
+        const hitMesh = castRay(event, cameraObj, sceneObj);
+
+        if (hitMesh) {
+            console.log("AI Clicked:", hitMesh.name);
+            // Show Loading
+            loaderAi.classList.remove('hidden');
+            textAi.innerText = `Analyzing ${hitMesh.name}...`;
+
+            // Call AI
+            const activeModel = MODELS[0].file.replace('.glb', '').replace('.gltf', '');
+            const explanation = await geminiSvc.explainMesh(hitMesh.name, activeModel);
+
+            // Helper: Simple Markdown Formatter
+            const formatResponse = (text) => {
+                return text
+                    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Bold
+                    .replace(/\n/g, '<br>');                // Newlines
+            };
+
+            // Show Result
+            loaderAi.classList.add('hidden');
+            textAi.innerHTML = formatResponse(explanation);
+        }
+    });
 
     renderLoop();
 }

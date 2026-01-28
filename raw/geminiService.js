@@ -9,8 +9,8 @@ export class GeminiService {
         if (!GEMINI_API_KEY) {
             console.warn("Gemini Service: No API Key found in config.");
         }
-        this.genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-        // this.model is now instantiated dynamically in explainMesh to support fallbacks
+        this.genAI = new GoogleGenerativeAI(GEMINI_API_KEY || "YOUR_API_KEY");
+        this.model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     }
 
     /**
@@ -28,29 +28,20 @@ export class GeminiService {
             The user just clicked on a specific sub-part named: "${meshName}".
             
             Task:
-            1. Identify what this part of the model.
+            1. Identify what this part likely represents based on the name.
             2. Explain its function concisely (max 2 sentences).
             3. Use a friendly, educational tone.
+            
+            If the part name is generic (e.g. "Mesh_05"), ask the user to select a more specific part.
         `;
 
-        // List of models to try in order of preference
-        const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-pro", "gemini-1.0-pro"];
-
-        for (const modelName of modelsToTry) {
-            try {
-                console.log(`🔄 Attempting to generate with model: ${modelName}`);
-                const modelInstance = this.genAI.getGenerativeModel({ model: modelName });
-                const result = await modelInstance.generateContent(prompt);
-                const response = await result.response;
-                return response.text();
-            } catch (error) {
-                console.warn(`⚠️ Failed with ${modelName}:`, error.message);
-                // Continue to next model in loop
-            }
+        try {
+            const result = await this.model.generateContent(prompt);
+            const response = await result.response;
+            return response.text();
+        } catch (error) {
+            console.error("❌ Gemini API Error:", error);
+            return "I'm having trouble connecting to the brain base right now. Please check your API Key.";
         }
-
-        // If all failed
-        console.error("❌ All models failed.");
-        return "I'm having trouble connecting. My model list is exhausted. Please check Console > 'AVAILABLE MODELS' to see what your key supports.";
     }
 }
