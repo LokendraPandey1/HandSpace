@@ -1,1 +1,1 @@
-export const GEMINI_API_KEY = "AIzaSyDPdwOuZ9HZwxQY-ltwodavFOF_E55HebI"; // FORCE HARDCODED for debugging
+export const GEMINI_API_KEY = "AIzaSyBnN5arYz1i6yXxEdKoXHYdds2ScPjG9jY"; // FORCE HARDCODED for debugging

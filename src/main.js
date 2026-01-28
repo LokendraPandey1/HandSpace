@@ -82,9 +82,17 @@ function init() {
             loaderAi.classList.remove('hidden');
             textAi.innerText = `Analyzing ${hitMesh.name}...`;
 
+            // Capture context
+            const activeModelMeta = modelMgr.getCurrentModelMetadata();
+            // Capture Screenshot (0.8 quality jpeg)
+            const screenshot = canvasElem.toDataURL('image/jpeg', 0.8);
+
             // Call AI
-            const activeModel = MODELS[0].file.replace('.glb', '').replace('.gltf', '');
-            const explanation = await geminiSvc.explainMesh(hitMesh.name, activeModel);
+            const explanation = await geminiSvc.explainMesh(
+                hitMesh.name,
+                activeModelMeta.name,
+                screenshot
+            );
 
             // Helper: Simple Markdown Formatter
             const formatResponse = (text) => {

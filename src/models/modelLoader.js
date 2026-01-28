@@ -14,6 +14,7 @@ export class ModelManager {
         this.sceneRef = sceneRef;
         this.activeModel = null;
         this.baseScale = 1;
+        this.currentModelMeta = null;
     }
 
     reset() {
@@ -38,7 +39,15 @@ export class ModelManager {
         return MODELS;
     }
 
+    getCurrentModelMetadata() {
+        return this.currentModelMeta || { name: 'Unknown Model', file: 'unknown' };
+    }
+
     load(modelFile) {
+        // Find meta info
+        const meta = MODELS.find(m => m.file === modelFile);
+        this.currentModelMeta = meta || { name: modelFile, file: modelFile };
+
         if (this.activeModel) {
             this.sceneRef.remove(this.activeModel);
 
@@ -55,7 +64,7 @@ export class ModelManager {
         }
 
         const gltfLoader = new GLTFLoader();
-        updateStatus(`Loading ${modelFile}...`);
+        updateStatus(`Loading ${this.currentModelMeta.name}...`);
 
         gltfLoader.load(`models/${modelFile}`, (gltfData) => {
             const loadedScene = gltfData.scene;
@@ -81,7 +90,7 @@ export class ModelManager {
             }
 
             this.sceneRef.add(this.activeModel);
-            console.log(`Loaded ${modelFile}`);
+            console.log(`Loaded ${this.currentModelMeta.name}`);
             updateStatus("Ready");
         },
             (progressEvent) => {
