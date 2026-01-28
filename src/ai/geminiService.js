@@ -26,7 +26,7 @@ export class GeminiService {
             The user just clicked on a specific sub-part named: "${meshName}".
             
             Task:
-            1. Identify what this part likely represents based on the name.
+            1. Identify what this part of the model.
             2. Explain its function concisely (max 2 sentences).
             3. Use a friendly, educational tone.
             
