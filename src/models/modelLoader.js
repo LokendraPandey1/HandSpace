@@ -3,10 +3,15 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { updateStatus } from '../ui/overlay.js';
 
 export const MODELS = [
-    { name: 'Default Model', file: 'model.glb' },
-    { name: 'Human Skeleton', file: 'free_pack_-_human_skeleton.glb' },
-    { name: 'Jet Engine', file: 'jet_engine.glb' },
-    { name: 'Rocket Ship', file: 'gorilla_tag_rocket_ship.glb' }
+    { name: 'Default Model', file: 'model.glb', category: 'Basics' },
+    { name: 'Human Skeleton', file: 'free_pack_-_human_skeleton.glb', category: 'Anatomy' },
+    { name: 'Human Heart', file: 'heart.glb', category: 'Anatomy' },
+    { name: 'Human Lungs', file: 'lungs.glb', category: 'Anatomy' },
+    { name: 'Colored Brain', file: 'colored_brain_model.glb', category: 'Anatomy' },
+    { name: 'Anatomical Scan', file: 'anatomical_scan_test.glb', category: 'Anatomy' },
+    { name: 'Full Anatomy', file: 'model_huma_anatomic_cos_mdeie.glb', category: 'Anatomy' },
+    { name: 'Jet Engine', file: 'jet_engine.glb', category: 'Engineering' },
+    { name: 'Rocket Ship', file: 'gorilla_tag_rocket_ship.glb', category: 'Space' }
 ];
 
 export class ModelManager {

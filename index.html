@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hand Interaction Prototype</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_platform.css"> <!-- Platform Styles -->
+
+    <!-- Navbar Integration -->
+    <script type="module">
+        import { initNavbar } from './src/ui/navbar.js';
+        initNavbar('viewer');
+    </script>
 
     <!-- MediaPipe Hands & Camera Utils -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
@@ -33,8 +40,24 @@
     <!-- We need the video element for MediaPipe to process -->
     <video class="input_video"></video>
 
-    <!-- UI Overlay -->
-    <div id="ui-container">
+    <!-- Language Controls -->
+    <div id="lang-wrapper">
+        <button id="btn-lang" title="Switch Language">🌐</button>
+        <div id="lang-menu" class="hidden">
+            <div class="lang-opt" data-lang="English">English</div>
+            <div class="lang-opt" data-lang="Hindi">Hindi</div>
+        </div>
+    </div>
+
+    <!-- Landing Page -->
+    <div id="landing-page">
+        <h1 class="landing-title">HandSpace</h1>
+        <p class="landing-subtitle">Interactive 3D Learning with Gestures</p>
+        <button id="btn-start-app">Start Experience</button>
+    </div>
+
+    <!-- UI Overlay (Initially Hidden) -->
+    <div id="ui-container" class="hidden">
         <div id="status-text">State: Idle</div>
         <div class="controls-group">
             <button id="btn-scale-up" class="control-btn" title="Scale Up">+</button>
@@ -66,10 +89,17 @@
     </div>
 
     <!-- Model Selector -->
+    <!-- Model Selector -->
     <div id="model-menu">
         <h3>Models</h3>
         <div id="model-list"></div>
     </div>
+
+    <!-- Annotation Overlay Layer -->
+    <svg id="line-layer"
+        style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 15;"></svg>
+    <div id="annotation-container"
+        style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 16;"></div>
 
     <!-- Canvas for Three.js -->
     <canvas class="output_canvas"></canvas>

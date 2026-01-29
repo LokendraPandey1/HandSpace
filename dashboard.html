@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandSpace Dashboard</title>
+    <link rel="stylesheet" href="style_platform.css">
+    <script type="module">
+        import { initNavbar } from './src/ui/navbar.js';
+        import { Auth } from './src/auth/auth.js';
+
+        // Initialize Navbar (Active Page: 'dashboard')
+        initNavbar('dashboard');
+
+        // Personalize Welcome Message
+        const user = Auth.getUser();
+        if (user && user.name) {
+            document.getElementById('welcome-name').innerText = user.name.split(' ')[0]; // First name only
+        }
+
+        // Simple Random Fact Generator
+        const facts = [
+            "The human brain generates enough electricity to power a small light bulb.",
+            "Your heart beats over 100,000 times a day.",
+            "Bones are stronger than concrete, ounce for ounce.",
+            "The small intestine is about 20 feet long!"
+        ];
+        document.getElementById('daily-fact-text').innerText = facts[Math.floor(Math.random() * facts.length)];
+    </script>
+</head>
+
+<body class="platform-page">
+
+    <!-- Navbar injected here -->
+
+    <div class="dashboard-container">
+
+        <!-- Welcome Header -->
+        <div class="welcome-header">
+            <h1>Welcome back, <span id="welcome-name">Explorer</span>! 🚀</h1>
+            <p style="color: #aaa; font-size: 1.2rem;">Ready to discover something new today?</p>
+        </div>
+
+        <!-- Daily Fact Card -->
+        <div class="card-glass daily-fact-card">
+            <h3 style="color: #43cea2; margin-top:0;">💡 Fact of the Day</h3>
+            <p id="daily-fact-text" style="font-size: 1.1rem; line-height: 1.6;">Loading...</p>
+        </div>
+
+        <!-- Progress Card -->
+        <div class="progress-card card-glass">
+            <h3 style="color: #4facfe; margin-top:0;">📊 Your Progress</h3>
+            <div style="margin-top: 15px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <span>Anatomy Mastery</span>
+                    <span>30%</span>
+                </div>
+                <div style="width:100%; background:rgba(255,255,255,0.1); height:8px; border-radius:4px;">
+                    <div style="width:30%; background:#4facfe; height:100%; border-radius:4px;"></div>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <span>Space Exploration</span>
+                    <span>10%</span>
+                </div>
+                <div style="width:100%; background:rgba(255,255,255,0.1); height:8px; border-radius:4px;">
+                    <div style="width:10%; background:#d63031; height:100%; border-radius:4px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity card-glass">
+            <h3 style="margin-top:0;">🕒 Jump Back In</h3>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div
+                    style="background: rgba(0,0,0,0.3); width: 80px; height: 80px; border-radius: 12px; display:flex; align-items:center; justify-content:center; font-size: 2rem;">
+                    🫀</div>
+                <div>
+                    <h4 style="margin: 0 0 5px 0;">Human Heart</h4>
+                    <p style="margin: 0; color: #aaa; font-size: 0.9rem;">Last viewed: Just now</p>
+                    <a href="index.html" class="btn-primary">Open Viewer</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="card-glass" style="grid-column: span 6;">
+            <h3>📚 Browse Library</h3>
+            <p style="color:#ccc;">Explore 20+ interactive 3D models.</p>
+            <a href="library.html" class="btn-primary"
+                style="background:transparent; border:1px solid white; color:white;">Go to Library</a>
+        </div>
+
+        <div class="card-glass" style="grid-column: span 6;">
+            <h3>✅ Take a Quiz</h3>
+            <p style="color:#ccc;">Test your knowledge and earn badges.</p>
+            <button class="btn-primary"
+                style="background:transparent; border:1px solid white; color:white; opacity: 0.5; cursor: not-allowed;">Coming
+                Soon</button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandSpace Profile</title>
+    <link rel="stylesheet" href="style_platform.css">
+    <script type="module">
+        import { initNavbar } from './src/ui/navbar.js';
+        import { Auth } from './src/auth/auth.js';
+
+        initNavbar('profile');
+
+        // Personalize Profile Header
+        const user = Auth.getUser();
+        if (user && user.name) {
+            document.getElementById('profile-name').innerText = user.name.split(' ')[0] + "'s Profile";
+        }
+
+        // Simple Settings Logic
+        window.onload = () => {
+            const langSelect = document.getElementById('pref-lang');
+            const savedLang = localStorage.getItem('handspace_lang') || 'English';
+            langSelect.value = savedLang;
+
+            langSelect.addEventListener('change', (e) => {
+                localStorage.setItem('handspace_lang', e.target.value);
+                alert('Language preference saved!');
+            });
+        }
+    </script>
+</head>
+
+<body class="platform-page">
+
+    <!-- Navbar injected here -->
+
+    <div class="dashboard-container">
+
+        <div class="welcome-header">
+            <h1><span id="profile-name">User Profile</span> 👤</h1>
+            <p style="color: #aaa; font-size: 1.2rem;">Manage your learning journey and preferences.</p>
+        </div>
+
+        <!-- Stats Card -->
+        <div class="card-glass" style="grid-column: span 6;">
+            <h3 style="color: #4facfe;">🏆 Your Achievements</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px; text-align:center;">
+                    <div style="font-size: 2rem;">🔥</div>
+                    <div style="font-size: 1.5rem; font-weight:bold;">3</div>
+                    <div style="color:#aaa; font-size:0.8rem;">Day Streak</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px; text-align:center;">
+                    <div style="font-size: 2rem;">🧠</div>
+                    <div style="font-size: 1.5rem; font-weight:bold;">12</div>
+                    <div style="color:#aaa; font-size:0.8rem;">Models Explored</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Card -->
+        <div class="card-glass" style="grid-column: span 6;">
+            <h3 style="color: #aeaeae;">⚙️ Settings</h3>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; margin-bottom:5px; color:#ccc;">Preferred Language</label>
+                <select id="pref-lang"
+                    style="width:100%; padding:10px; background:rgba(0,0,0,0.5); color:white; border:1px solid #555; border-radius:8px;">
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; margin-bottom:5px; color:#ccc;">Accessibility</label>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <input type="checkbox" id="pref-tts-auto" checked>
+                    <label for="pref-tts-auto">Enable Text-to-Speech Button</label>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width:100%;">Save Changes</button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

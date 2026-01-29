@@ -33,7 +33,7 @@ export function castRay(event, camera, scene) {
 
         if (found) {
             console.log("🎯 Raycast Hit:", found.object.name);
-            return found.object;
+            return found; // Return the full intersection object (contains .point, .object, etc.)
         }
     }
 

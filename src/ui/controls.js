@@ -21,17 +21,71 @@ export function initControls(modelMgr, cameraControls) {
         modelListElem.innerHTML = '';
         const availableModels = modelMgr.getAvailableModels();
 
-        availableModels.forEach((modelData, idx) => {
-            const modelBtn = document.createElement('button');
-            modelBtn.className = 'model-btn';
-            modelBtn.innerText = modelData.name;
-            modelBtn.onclick = () => {
-                document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
-                modelBtn.classList.add('active');
-                modelMgr.load(modelData.file);
-            };
-            if (idx === 0) modelBtn.classList.add('active');
-            modelListElem.appendChild(modelBtn);
+        // Group by Category
+        const categories = {};
+        availableModels.forEach(m => {
+            if (!categories[m.category]) categories[m.category] = [];
+            categories[m.category].push(m);
         });
+
+        // Render Groups
+        // Render Groups (Accordion Style)
+        let firstCategory = true;
+
+        for (const [catName, models] of Object.entries(categories)) {
+            // Container for this category
+            const catBlock = document.createElement('div');
+            catBlock.className = 'category-block';
+
+            // Header (Clickable)
+            const catHeader = document.createElement('div');
+            catHeader.className = 'category-header accordion-header';
+            catHeader.innerHTML = `<span>${catName}</span> <span class="arrow">▶</span>`;
+
+            // Content (Hidden list of models)
+            const catContent = document.createElement('div');
+            catContent.className = 'category-content hidden'; // Start hidden
+
+            // Toggle Logic
+            catHeader.onclick = () => {
+                const isOpen = !catContent.classList.contains('hidden');
+
+                // Auto-close others
+                document.querySelectorAll('.category-content').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.arrow').forEach(el => el.style.transform = 'rotate(0deg)');
+
+                if (!isOpen) {
+                    catContent.classList.remove('hidden');
+                    catHeader.querySelector('.arrow').style.transform = 'rotate(90deg)';
+                }
+            };
+
+            // Models
+            models.forEach((modelData) => {
+                const modelBtn = document.createElement('button');
+                modelBtn.className = 'model-btn';
+                modelBtn.innerText = modelData.name;
+                modelBtn.onclick = () => {
+                    document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+                    modelBtn.classList.add('active');
+                    modelMgr.load(modelData.file);
+                };
+                if (modelData.name === 'Default Model') modelBtn.classList.add('active');
+
+                catContent.appendChild(modelBtn);
+            });
+
+            // Append parts
+            catBlock.appendChild(catHeader);
+            catBlock.appendChild(catContent);
+            modelListElem.appendChild(catBlock);
+
+            // Auto-expand first category
+            if (firstCategory) {
+                catContent.classList.remove('hidden');
+                catHeader.querySelector('.arrow').style.transform = 'rotate(90deg)';
+                firstCategory = false;
+            }
+        }
     }
 }

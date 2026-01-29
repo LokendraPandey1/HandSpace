@@ -1,27 +1,29 @@
 @echo off
-echo Starting HandSpace...
+echo Starting HandSpace Backend and App...
 
-:: 1. Try starting with npx http-server (Node.js)
+:: Check for Node.js
 where node >nul 2>nul
-if %errorlevel% equ 0 (
-    echo Node.js detected. Starting with http-server...
-    :: -y: yes to install if needed
-    :: -o: open browser
-    :: -c-1: disable caching
-    call npx -y http-server . -o -c-1
-    goto :EOF
+if %errorlevel% neq 0 (
+    echo Error: Node.js is required but not found.
+    echo Please install Node.js from https://nodejs.org/
+    pause
+    exit /b
 )
 
-:: 2. Fallback to Python if Node is missing
-where python >nul 2>nul
-if %errorlevel% equ 0 (
-    echo Node.js not found. Python detected. Starting with python...
-    start "" "http://localhost:8000"
-    python -m http.server 8000
-    goto :EOF
+echo Installing dependencies (if missing)...
+if not exist "node_modules" (
+    call npm install
 )
 
-:: 3. If neither found
-echo Error: Neither Node.js nor Python was found.
-echo Please install Node.js (recommended) or Python to run this project.
+echo.
+echo ===================================================
+echo   HandSpace Server Starting on Port 5000...
+echo   Please wait for "MongoDB Connected" message
+echo ===================================================
+echo.
+
+:: Start Server and Open Browser in parallel
+start "" "http://localhost:5000/login.html"
+node server/server.js
+
 pause

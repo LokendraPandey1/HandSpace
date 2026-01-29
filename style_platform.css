@@ -1,0 +1,200 @@
+/* Platform Theme & Layout */
+body.platform-page {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    /* Allow scrolling unlike the viewer */
+}
+
+/* Unified Navigation Bar */
+.main-navbar {
+    background: rgba(0, 0, 0, 0.5);
+    /* More translucent */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 40px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    color: #aeaeae;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: white;
+}
+
+.nav-link.active {
+    border-bottom: 2px solid #00f2fe;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 25px;
+}
+
+/* Cards */
+.card-glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, background 0.3s;
+}
+
+.card-glass:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+}
+
+/* Specific Dashboard Sections */
+.welcome-header {
+    grid-column: span 12;
+    margin-bottom: 20px;
+}
+
+.welcome-header h1 {
+    font-size: 3rem;
+    margin: 0;
+    background: linear-gradient(to right, #fff, #aaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.daily-fact-card {
+    grid-column: span 6;
+    background: linear-gradient(135deg, rgba(67, 206, 162, 0.1), rgba(24, 90, 157, 0.1));
+    border-color: rgba(67, 206, 162, 0.3);
+}
+
+.progress-card {
+    grid-column: span 6;
+}
+
+.recent-activity {
+    grid-column: span 12;
+}
+
+/* Action Button */
+.btn-primary {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border: none;
+    padding: 10px 20px;
+    color: black;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+}
+
+/* Forms & Auth */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: radial-gradient(circle at center, #2b2b2b 0%, #1a1a1a 100%);
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
+.form-group label {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-left: 5px;
+}
+
+.form-input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #00f2fe;
+}
+
+.auth-link {
+    color: #4facfe;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* Grids for Library (for later) */
+.model-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandSpace Quiz Mode</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_platform.css">
+
+    <!-- Navbar Integration -->
+    <script type="module">
+        import { initNavbar } from './src/ui/navbar.js';
+        initNavbar('quiz');
+    </script>
+
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Overlay UI for Quiz -->
+    <div id="quiz-overlay"
+        style="position: absolute; top: 80px; left: 50%; transform: translateX(-50%); width: 80%; max-width: 600px; text-align: center; pointer-events: none; z-index: 20;">
+        <div class="card-glass" style="background: rgba(0,0,0,0.8); pointer-events: auto;">
+            <h2 id="quiz-question" style="color: #00f2fe; margin-top: 0;">❓ Ready to start?</h2>
+            <p id="quiz-status" style="color: white; font-size: 1.2rem;">Select a topic to begin the challenge.</p>
+            <div id="quiz-controls">
+                <button id="btn-start-quiz" class="btn-primary">Start Anatomy Quiz</button>
+            </div>
+            <div id="quiz-score" class="hidden" style="margin-top: 15px; font-weight: bold; color: #43cea2;">
+                Score: 0 / 0
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas for 3D -->
+    <canvas class="output_canvas"></canvas>
+
+    <!-- Quiz Logic Script -->
+    <script type="module" src="src/quiz/quizMain.js"></script>
+</body>
+
+</html>
